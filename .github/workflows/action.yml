@@ -52,7 +52,7 @@ jobs:
                 clientMutationId
               }
             }
-          pr: ${{ github.event.pull_request.number }}
+          pr: ${{ github.event.pull_request.node_id }}
         env:
           GITHUB_TOKEN: ghs_LcTs6W3NN2nBWBcG3VQCHPmcdQ3h544Sf0JN
       - run: "echo 'gql_query: ${{ steps.gql_query.outputs.data }}'"
