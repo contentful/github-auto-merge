@@ -23,7 +23,7 @@ jobs:
         uses: hashicorp/vault-action@v2.4.1
         with:
           url: ${{ secrets.VAULT_URL }}
-          role: testing-auto-merge
+          role: testing-auto-merge-github-action
           method: jwt
           path: github-actions
           exportEnv: false
