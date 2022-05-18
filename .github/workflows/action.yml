@@ -44,17 +44,17 @@ jobs:
 
           github-token: "ghs_If7kosVpV0OUHuB1jWjSyfi8U8iPW50Y0l19" # ${{ inputs.github_token }}
       - uses: octokit/graphql-action@v2.x
-        id: get_latest_release
+        id: gql_query
         with:
           query: |
-            mutation enableAutoMerge($prId:ID!) {
+            mutation enableAutoMerge($pr:ID!) {
               enablePullRequestAutoMerge(input:{pullRequestId:$prId}){
                 clientMutationId
               }
             }
-          prId: ${{ github.event.pull_request.number }}
+          pr: ${{ github.event.pull_request.number }}
         env:
           GITHUB_TOKEN: ghs_If7kosVpV0OUHuB1jWjSyfi8U8iPW50Y0l19
-      - run: "echo 'latest release: ${{ steps.get_latest_release.outputs.data }}'"
+      - run: "echo 'gql_query: ${{ steps.gql_query.outputs.data }}'"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
