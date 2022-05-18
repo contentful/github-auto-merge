@@ -1,15 +1,30 @@
 name: "Dependabot auto-merge"
 description: "Approves and merges Dependabot PRs"
 
-
-inputs:
-  github_token:
-    description: "GitHub token used for commenting on and approving PR"
-    required: true
-
-runs:
-  using: "composite"
-  steps:
+on: pull_request_target # TODO remove this
+# inputs:
+#   github_token:
+#     description: "GitHub token used for commenting on and approving PR"
+#     required: true
+jobs:
+  worker: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve Github Token
+        id: vault
+        uses: hashicorp/vault-action@v2.4.1
+        with:
+          url: ${{ secrets.VAULT_URL }}
+          role: github-actions-pr
+          method: jwt
+          path: github-actions
+          exportEnv: false
+          jwtGithubAudience: ${{ secrets.VAULT_URL }}
+          secrets: |
+            github/token/github-action token | GITHUB_MERGE_TOKEN ;
+    # runs:
+    #   using: "composite"
+    #   steps:
       - name: approve-and-request-merge
         uses: actions/github-script@v5.0.0
         with:
@@ -38,7 +53,9 @@ runs:
               body: ''
             })
 
-          github-token: ${{ inputs.github_token }}
+          github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }} # ${{ inputs.github_token }}
       - run: gh pr merge -ds --auto
-          env: ${{ inputs.github_token }}
+        env:
+            GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
+            # GITHUB_TOKEN: ${{ inputs.github_token }}
           
