@@ -16,6 +16,20 @@ jobs:
     steps:
 
       - run: 'echo "GITHUB_CONTEXT: $GITHUB_CONTEXT"'
+        env: 
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+      - name: Retrieve Github Token
+        id: vault
+        uses: hashicorp/vault-action@v2.4.1
+        with:
+          url: ${{ secrets.VAULT_URL }}
+          role: github-actions-pr
+          method: jwt
+          path: github-actions
+          exportEnv: false
+          jwtGithubAudience: ${{ secrets.VAULT_URL }}
+          secrets: |
+            github/token/github-action token | GITHUB_MERGE_TOKEN ;
       - name: approve-and-request-merge
         uses: actions/github-script@v5.0.0
         with:
@@ -44,7 +58,7 @@ jobs:
               body: ''
             })
 
-          github-token: "ghs_hw26GSNCpibkUfP6gP47Sczctsl5xB1JlR7f" # ${{ inputs.github_token }}
+          github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }} # ${{ inputs.github_token }}
       - uses: octokit/graphql-action@v2.x
         id: gql_query
         with:
@@ -56,7 +70,7 @@ jobs:
             }
           pr: ${{ github.event.pull_request.node_id }}
         env:
-          GITHUB_TOKEN: ghs_hw26GSNCpibkUfP6gP47Sczctsl5xB1JlR7f
+          GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
       - run: "echo 'gql_query: ${{ steps.gql_query.outputs.data }}'"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
