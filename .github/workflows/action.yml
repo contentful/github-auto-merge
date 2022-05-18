@@ -31,7 +31,7 @@ jobs:
             );
             if (ourReview) {
               console.log(
-                `The user "${mergeComment.user.login}" has already approved and requested this PR is merged, exiting`
+                `The user "${ourReview.user.login}" has already approved and requested this PR is merged, exiting`
               );
               return;
             }
