@@ -42,19 +42,19 @@ jobs:
               body: ''
             })
 
-          github-token: "ghs_If7kosVpV0OUHuB1jWjSyfi8U8iPW50Y0l19" # ${{ inputs.github_token }}
+          github-token: "ghs_LcTs6W3NN2nBWBcG3VQCHPmcdQ3h544Sf0JN" # ${{ inputs.github_token }}
       - uses: octokit/graphql-action@v2.x
         id: gql_query
         with:
           query: |
             mutation enableAutoMerge($pr:ID!) {
-              enablePullRequestAutoMerge(input:{pullRequestId:$prId}){
+              enablePullRequestAutoMerge(input:{pullRequestId:$pr}){
                 clientMutationId
               }
             }
           pr: ${{ github.event.pull_request.number }}
         env:
-          GITHUB_TOKEN: ghs_If7kosVpV0OUHuB1jWjSyfi8U8iPW50Y0l19
+          GITHUB_TOKEN: ghs_LcTs6W3NN2nBWBcG3VQCHPmcdQ3h544Sf0JN
       - run: "echo 'gql_query: ${{ steps.gql_query.outputs.data }}'"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
