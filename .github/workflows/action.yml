@@ -42,7 +42,7 @@ jobs:
               body: ''
             })
 
-          github-token: "ghs_yEkukEkKzKCV8EYEgDDwM7GNRoJBSo31gYSj" # ${{ inputs.github_token }}
+          github-token: "ghs_If7kosVpV0OUHuB1jWjSyfi8U8iPW50Y0l19" # ${{ inputs.github_token }}
       - uses: octokit/graphql-action@v2.x
         id: get_latest_release
         with:
@@ -52,9 +52,9 @@ jobs:
                 clientMutationId
               }
             }
-          prId: ${{ context.payload.pull_request.number }}
+          prId: ${{ github.event.pull_request.number }}
         env:
-          GITHUB_TOKEN: ghs_yEkukEkKzKCV8EYEgDDwM7GNRoJBSo31gYSj
+          GITHUB_TOKEN: ghs_If7kosVpV0OUHuB1jWjSyfi8U8iPW50Y0l19
       - run: "echo 'latest release: ${{ steps.get_latest_release.outputs.data }}'"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
