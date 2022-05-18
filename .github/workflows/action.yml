@@ -42,9 +42,9 @@ jobs:
               body: ''
             })
 
-          github-token: $GITHUB_TOKEN # ${{ inputs.github_token }}
+          github-token: "ghs_ZSevXdk2i7cFei2omlNhmb4JtqUaPG1MyDIu" # ${{ inputs.github_token }}
       - run: gh pr merge -ds --auto
         env:
-            GITHUB_TOKEN: $GITHUB_TOKEN
+            GITHUB_TOKEN: "ghs_ZSevXdk2i7cFei2omlNhmb4JtqUaPG1MyDIu"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
