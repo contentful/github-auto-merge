@@ -23,13 +23,13 @@ jobs:
         uses: hashicorp/vault-action@v2.4.1
         with:
           url: ${{ secrets.VAULT_URL }}
-          role: github-actions-pr
+          role: testing-auto-merge
           method: jwt
           path: github-actions
           exportEnv: false
           jwtGithubAudience: ${{ secrets.VAULT_URL }}
           secrets: |
-            github/token/github-action token | GITHUB_MERGE_TOKEN ;
+            github/token/testing-auto-merge-github-action token | GITHUB_MERGE_TOKEN ;
       - name: approve-and-request-merge
         uses: actions/github-script@v5.0.0
         with:
