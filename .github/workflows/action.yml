@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - run: "echo 'github.event.pull_request: ${{ github.event.pull_request }}'"
+      - run: 'echo "GITHUB_CONTEXT: $GITHUB_CONTEXT"'
       - name: approve-and-request-merge
         uses: actions/github-script@v5.0.0
         with:
@@ -44,7 +44,7 @@ jobs:
               body: ''
             })
 
-          github-token: "ghs_LcTs6W3NN2nBWBcG3VQCHPmcdQ3h544Sf0JN" # ${{ inputs.github_token }}
+          github-token: "ghs_hw26GSNCpibkUfP6gP47Sczctsl5xB1JlR7f" # ${{ inputs.github_token }}
       - uses: octokit/graphql-action@v2.x
         id: gql_query
         with:
@@ -54,9 +54,9 @@ jobs:
                 clientMutationId
               }
             }
-          pr: ${{ github.event.pull_request.id }}
+          pr: ${{ github.event.pull_request.node_id }}
         env:
-          GITHUB_TOKEN: ghs_LcTs6W3NN2nBWBcG3VQCHPmcdQ3h544Sf0JN
+          GITHUB_TOKEN: ghs_hw26GSNCpibkUfP6gP47Sczctsl5xB1JlR7f
       - run: "echo 'gql_query: ${{ steps.gql_query.outputs.data }}'"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
