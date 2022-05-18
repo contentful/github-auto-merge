@@ -43,9 +43,19 @@ jobs:
               body: ''
             })
 
-          github-token: "ghs_85Z1LIJ9xVJNEv8AMm63kEURSjAqQU3VY8vH" # ${{ inputs.github_token }}
-      - run: gh pr merge -ds --auto
+          github-token: "ghs_yEkukEkKzKCV8EYEgDDwM7GNRoJBSo31gYSj" # ${{ inputs.github_token }}
+      - uses: octokit/graphql-action@v2.x
+        id: get_latest_release
+        with:
+          query: |
+            mutation enableAutoMerge($prId:ID!) {
+              enablePullRequestAutoMerge(input:{pullRequestId:$prId}){
+                clientMutationId
+              }
+            }
+          prId: ${{ context.payload.pull_request.number }}
         env:
-            GITHUB_TOKEN: "ghs_85Z1LIJ9xVJNEv8AMm63kEURSjAqQU3VY8vH"
+          GITHUB_TOKEN: ghs_yEkukEkKzKCV8EYEgDDwM7GNRoJBSo31gYSj
+      - run: "echo 'latest release: ${{ steps.get_latest_release.outputs.data }}'"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
