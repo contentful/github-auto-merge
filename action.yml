@@ -1,8 +1,6 @@
 name: "Dependabot auto-merge"
 # description: "Approves and merges Dependabot PRs"
 
-on: pull_request_target # TODO remove this
-
 # inputs:
 #   github_token:
 #     description: "GitHub token used for commenting on and approving PR"
@@ -14,9 +12,9 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - run: 'echo "GITHUB_CONTEXT: $GITHUB_CONTEXT"'
-        env: 
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+      # - run: 'echo "GITHUB_CONTEXT: $GITHUB_CONTEXT"'
+        # env: 
+        #   GITHUB_CONTEXT: ${{ toJSON(github) }}
       - name: Retrieve Github Token
         id: vault
         uses: hashicorp/vault-action@v2.4.1
