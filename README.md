@@ -1,4 +1,1 @@
 # testing-auto-merge
-
-
-test
