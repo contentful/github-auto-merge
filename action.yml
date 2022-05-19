@@ -5,9 +5,6 @@ description: "Approves and merges Dependabot PRs"
 
 runs:
   using: "composite"
-  permissions:
-    contents: write
-    id-token: write
   steps:
     - name: Retrieve Github Token
       id: vault
