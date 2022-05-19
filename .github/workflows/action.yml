@@ -27,7 +27,7 @@ jobs:
           method: jwt
           path: github-actions
           exportEnv: false
-          jwtGithubAudience: ${{ secrets.VAULT_URL }}
+          jwtGithubAudience: https://github.com/contentful
           secrets: |
             github/token/testing-auto-merge-github-action token | GITHUB_MERGE_TOKEN ;
       - name: approve-and-request-merge
