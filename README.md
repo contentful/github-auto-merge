@@ -1,1 +1,1 @@
-# testing-auto-merge
+# github-auto-merge
