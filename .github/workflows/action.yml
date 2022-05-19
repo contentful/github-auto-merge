@@ -3,18 +3,17 @@ name: "Dependabot auto-merge"
 
 on: pull_request_target # TODO remove this
 
-permissions:
-  contents: write
-  id-token: write
 # inputs:
 #   github_token:
 #     description: "GitHub token used for commenting on and approving PR"
 #     required: true
 jobs:
   worker: 
+    permissions:
+      contents: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
-
       - run: 'echo "GITHUB_CONTEXT: $GITHUB_CONTEXT"'
         env: 
           GITHUB_CONTEXT: ${{ toJSON(github) }}
@@ -27,7 +26,8 @@ jobs:
           method: jwt
           path: github-actions
           exportEnv: false
-          jwtGithubAudience: ${{ secrets.VAULT_URL }}
+          # jwtGithubAudience: https://github.com/contentful
+          # tlsSkipVerify: true
           secrets: |
             github/token/testing-auto-merge-github-action token | GITHUB_MERGE_TOKEN ;
       - name: approve-and-request-merge
