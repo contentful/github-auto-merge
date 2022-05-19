@@ -26,8 +26,6 @@ jobs:
           method: jwt
           path: github-actions
           exportEnv: false
-          # jwtGithubAudience: https://github.com/contentful
-          # tlsSkipVerify: true
           secrets: |
             github/token/testing-auto-merge-github-action token | GITHUB_MERGE_TOKEN ;
       - name: approve-and-request-merge
@@ -59,18 +57,22 @@ jobs:
             })
 
           github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }} # ${{ inputs.github_token }}
-      - uses: octokit/graphql-action@v2.x
-        id: gql_query
-        with:
-          query: |
-            mutation enableAutoMerge($pr:ID!) {
-              enablePullRequestAutoMerge(input:{pullRequestId:$pr}){
-                clientMutationId
-              }
-            }
-          pr: ${{ github.event.pull_request.node_id }}
+
+      - run: gh pr merge -ds --auto ${{ github.event.pull_request.url }}
         env:
           GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
-      - run: "echo 'gql_query: ${{ steps.gql_query.outputs.data }}'"
+      # - uses: octokit/graphql-action@v2.x
+      #   id: gql_query
+      #   with:
+      #     query: |
+      #       mutation enableAutoMerge($pr:ID!) {
+      #         enablePullRequestAutoMerge(input:{pullRequestId:$pr}){
+      #           clientMutationId
+      #         }
+      #       }
+      #     pr: ${{ github.event.pull_request.node_id }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
+      # - run: "echo 'gql_query: ${{ steps.gql_query.outputs.data }}'"
             # GITHUB_TOKEN: ${{ inputs.github_token }}
           
