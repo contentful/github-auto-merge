@@ -14,7 +14,7 @@ runs:
       id: vault
       uses: hashicorp/vault-action@v2.4.1
       with:
-        url: ${{ inputs.github_token }}
+        url: ${{ inputs.VAULT_URL }}
         role: ${{ github.event.repository.name }}-github-action
         method: jwt
         path: github-actions
