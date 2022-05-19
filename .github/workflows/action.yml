@@ -58,7 +58,7 @@ jobs:
 
           github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }} # ${{ inputs.github_token }}
 
-      - run: gh pr merge -ds --auto ${{ github.event.pull_request.url }}
+      - run: gh pr merge -ds --auto ${{ github.event.pull_request.html_url }}
         env:
           GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
       # - uses: octokit/graphql-action@v2.x
