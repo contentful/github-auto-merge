@@ -45,9 +45,9 @@ runs:
             body: ''
           })
 
-        github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }} # ${{ inputs.github_token }}
-
+        github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
     - name: Enable auto merge
+      shell: bash
       run: gh pr merge -ds --auto ${{ github.event.pull_request.html_url }}
       env:
         GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
