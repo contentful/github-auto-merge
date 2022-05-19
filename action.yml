@@ -3,6 +3,10 @@ name: "Dependabot auto-merge 2.0"
 description: "Approves and merges Dependabot PRs"
 
 
+inputs:
+  VAULT_URL:
+    description: "Vault URL"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -10,7 +14,7 @@ runs:
       id: vault
       uses: hashicorp/vault-action@v2.4.1
       with:
-        url: ${{ secrets.VAULT_URL }}
+        url: ${{ inputs.github_token }}
         role: ${{ github.event.repository.name }}-github-action
         method: jwt
         path: github-actions
