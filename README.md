@@ -30,4 +30,4 @@ jobs:
         with:
           VAULT_URL: ${{ secrets.VAULT_URL }} # this is an organisation level secret, you do not need to add it to your repo
 ```
-You can see an example in this repo [.github/workflows/action.yml](.github/workflows/action.yml)
+You can see an example in this repo [example.yml](example.yml)
