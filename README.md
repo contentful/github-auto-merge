@@ -5,6 +5,7 @@ A github custom action to fetch a Github token from vault, approve the PR and en
 - The repo has to have "Allow auto-merge" (in repo settings) checked in order to work
 ![Screenshot 2022-05-20 at 09 39 07](https://user-images.githubusercontent.com/7535187/169478228-dd499b9f-ec78-4c20-a2a5-b5c16a5dd2c1.png)
 - In addition the `main` (or `master`) branch being merged to should have branch protection rules. For example, when a branch protection rule enforces "Require pull request reviews before merging" or "Require status checks to pass before merging".
+- TBD instructions around getting the Github token access. Currently is done by the Atools team adding to this list and aplying the changes https://github.com/contentful/cf-vault/blob/main/terraform/vault-access/main.ts#L82
 
 ## Usage
 
