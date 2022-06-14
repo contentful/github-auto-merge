@@ -15,12 +15,12 @@ runs:
       uses: hashicorp/vault-action@v2.4.1
       with:
         url: ${{ inputs.VAULT_URL }}
-        role: ${{ github.event.repository.name }}-github-action
+        role: ${{ github.event.repository.name }}-dependabot
         method: jwt
         path: github-actions
         exportEnv: false
         secrets: |
-          github/token/${{ github.event.repository.name }}-github-action token | GITHUB_MERGE_TOKEN ;
+          github/token/${{ github.event.repository.name }}-dependabot token | GITHUB_MERGE_TOKEN ;
     - name: approve PR
       uses: actions/github-script@v5.0.0
       with:
