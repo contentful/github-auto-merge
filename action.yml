@@ -15,7 +15,7 @@ runs:
       uses: hashicorp/vault-action@v2.4.1
       with:
         url: ${{ inputs.VAULT_URL }}
-        role: ${{ github.event.repository.name }}-dependabot
+        role: ${{ github.event.repository.name }}-github-action
         method: jwt
         path: github-actions
         exportEnv: false
