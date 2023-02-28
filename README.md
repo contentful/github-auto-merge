@@ -18,7 +18,7 @@ version: 1
 services:
   github-action:
     policies:
-    - dependabot
+      - dependabot
 ```
 
 To reference the action, create a workflow in your project in `.github/workflows/` e.g.
@@ -46,3 +46,7 @@ jobs:
 You can see an example in this repo [example.yml](example.yml)
 
 If you already have an existing `dependabot-approve-and-request-merge.yml` workflow, you can simply replace the contents with the updated configuration.
+
+## Local Testing
+
+Install [`act`](https://github.com/nektos/act#installation) and run `make run-local`.
