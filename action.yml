@@ -57,18 +57,22 @@ runs:
             .map(([method]) => method);
 
           // just pick the first one
-          const method = allowedMethods[0];
+          const mergeMethod = allowedMethods[0];
 
-          if (!method) {
+          if (!mergeMethod) {
             throw new Error("No allowed merge method found");
           }
+
+          const pullRequestId = context.payload.pull_request.node_id;
+
+          console.log(`Enabling auto-merge for ${pullRequestId} with ${mergeMethod} method`)
 
           await github.graphql(
             "mutation EnableAutoMerge($input: EnablePullRequestAutoMergeInput!) { enablePullRequestAutoMerge(input: $input) { pullRequest { state } } }",
             {
               input: {
-                pullRequestId: context.payload.pull_request.node_id,
-                mergeMethod: method,
+                pullRequestId,
+                mergeMethod,
               },
             }
           );
