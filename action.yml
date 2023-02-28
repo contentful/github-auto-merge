@@ -62,15 +62,15 @@ runs:
             repo: context.payload.repository.name,
           });
 
-          const methods = {
-            squash: repo.data.allow_squash_merge,
-            merge: repo.data.allow_merge_commit,
-            rebase: repo.data.allow_rebase_merge,
-          };
+          const methods = new Map([
+            ['squash', repo.data.allow_squash_merge],
+            ['merge', repo.data.allow_merge_commit],
+            ['rebase', repo.data.allow_rebase_merge],
+          ]);
 
           console.log(methods)
 
-          const allowedMethods = Object.entries(methods)
+          const allowedMethods = [...methods.entries()]
             .filter(([_, allowed]) => allowed)
             .map(([method]) => method);
 
