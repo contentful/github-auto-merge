@@ -73,6 +73,6 @@ runs:
       shell: bash
       run: |
         echo "Auto merging PR using method ${{steps.merge-type.outputs.result}}"
-        gh pr merge --delete-branch "--"${{ steps.merge-type.outputs.result }}" --auto ${{ github.event.pull_request.html_url }}
+        gh pr merge --delete-branch "--${{ steps.merge-type.outputs.result }}" --auto ${{ github.event.pull_request.html_url }}
       env:
         GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
