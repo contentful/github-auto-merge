@@ -52,7 +52,7 @@ runs:
             REBASE: repo.allow_rebase_merge,
           };
 
-          console.log.log(repo)
+          console.log(repo)
 
           const allowedMethods = Object.entries(methods)
             .filter(([_, allowed]) => allowed)
