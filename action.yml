@@ -39,13 +39,20 @@ runs:
             body: ''
           })
 
+          console.log(context.payload.repository)
+
+          const repo = await github.rest.repos.get({
+            owner: context.payload.repository.owner.login,
+            repo: context.payload.repository.name,
+          });
+
           const methods = {
-            SQUASH: context.payload.repository.allow_squash_merge,
-            MERGE: context.payload.repository.allow_merge_commit,
-            REBASE: context.payload.repository.allow_rebase_merge,
+            SQUASH: repo.allow_squash_merge,
+            MERGE: repo.allow_merge_commit,
+            REBASE: repo.allow_rebase_merge,
           };
 
-          console.log(context.payload.repository)
+          console.log.log(repo)
 
           const allowedMethods = Object.entries(methods)
             .filter(([_, allowed]) => allowed)
