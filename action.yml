@@ -44,12 +44,10 @@ runs:
             repo: context.payload.repository.name,
           });
 
-          console.log(repo)
-
           const methods = {
-            SQUASH: repo.allow_squash_merge,
-            MERGE: repo.allow_merge_commit,
-            REBASE: repo.allow_rebase_merge,
+            SQUASH: repo.data.allow_squash_merge,
+            MERGE: repo.data.allow_merge_commit,
+            REBASE: repo.data.allow_rebase_merge,
           };
 
           console.log(methods)
