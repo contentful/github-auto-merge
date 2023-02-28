@@ -44,6 +44,8 @@ runs:
             repo: context.payload.repository.name,
           });
 
+          console.log(repo)
+
           const methods = {
             SQUASH: repo.allow_squash_merge,
             MERGE: repo.allow_merge_commit,
