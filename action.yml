@@ -72,7 +72,8 @@ runs:
     - name: Enable auto merge
       shell: bash
       run: |
-        echo "Auto merging PR using method ${{steps.merge-type.outputs.result}}"
-        gh pr merge --delete-branch "--${{ steps.merge-type.outputs.result }}" --auto ${{ github.event.pull_request.html_url }}
+        merge_method="$(echo ${{ steps.merge-type.outputs.result }} | tr -d '"')"
+        echo "Auto merging PR using method $merge_method"
+        gh pr merge --delete-branch "--$merge_method" --auto ${{ github.event.pull_request.html_url }}
       env:
         GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
