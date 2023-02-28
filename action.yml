@@ -2,7 +2,6 @@ name: "Dependabot auto-merge 2.0"
 
 description: "Approves and merges Dependabot PRs"
 
-
 inputs:
   VAULT_URL:
     description: "Vault URL"
@@ -49,10 +48,31 @@ runs:
             body: ''
           })
 
-        github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
-    - name: Enable auto merge
-      shell: bash
-      run: gh pr merge -ds --auto ${{ github.event.pull_request.html_url }}
-      env:
-        GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
+          const methods = {
+            SQUASH: context.payload.repository.allow_squash_merge,
+            MERGE: context.payload.repository.allow_merge_commit,
+            REBASE: context.payload.repository.allow_rebase_merge,
+          };
 
+          const allowedMethods = Object.entries(methods)
+            .filter(([_, allowed]) => allowed)
+            .map(([method]) => method);
+
+          // just pick the first one
+          const method = allowedMethods[0];
+
+          if (!method) {
+            throw new Error("No allow merge method found");
+          }
+
+          await github.graphql(
+            "mutation EnableAutoMerge($input: EnablePullRequestAutoMergeInput!) { enablePullRequestAutoMerge(input: $input) { pullRequest { state } } }",
+            {
+              input: {
+                pullRequestId: context.payload.pull_request.node_id,
+                mergeMethod: method,
+              },
+            }
+          );
+
+        github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
