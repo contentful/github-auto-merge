@@ -54,6 +54,8 @@ runs:
             REBASE: context.payload.repository.allow_rebase_merge,
           };
 
+          console.log(context.payload.repository)
+
           const allowedMethods = Object.entries(methods)
             .filter(([_, allowed]) => allowed)
             .map(([method]) => method);
@@ -62,7 +64,7 @@ runs:
           const method = allowedMethods[0];
 
           if (!method) {
-            throw new Error("No allow merge method found");
+            throw new Error("No allowed merge method found");
           }
 
           await github.graphql(
