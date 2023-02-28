@@ -39,8 +39,6 @@ runs:
             body: ''
           })
 
-          console.log(context.payload.repository)
-
           const repo = await github.rest.repos.get({
             owner: context.payload.repository.owner.login,
             repo: context.payload.repository.name,
@@ -52,7 +50,7 @@ runs:
             REBASE: repo.allow_rebase_merge,
           };
 
-          console.log(repo)
+          console.log(methods)
 
           const allowedMethods = Object.entries(methods)
             .filter(([_, allowed]) => allowed)
