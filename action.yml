@@ -23,6 +23,7 @@ runs:
     - name: approve PR
       uses: actions/github-script@v6.3.3
       with:
+        github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
         script: |
           const opts = github.rest.pulls.listReviews.endpoint.merge({
             pull_number: context.payload.pull_request.number,
@@ -30,7 +31,6 @@ runs:
             repo: context.payload.repository.name,
           });
 
-          // TODO: Check if auto-merge is enabled
           github.rest.pulls.createReview({
             owner: context.payload.repository.owner.login,
             repo: context.payload.repository.name,
@@ -38,16 +38,21 @@ runs:
             event: 'APPROVE',
             body: ''
           })
-
+    - name: Get merge type
+      id: merge-type
+      uses: actions/github-script@v6.3.3
+      with:
+        github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
+        script: |
           const repo = await github.rest.repos.get({
             owner: context.payload.repository.owner.login,
             repo: context.payload.repository.name,
           });
 
           const methods = {
-            SQUASH: repo.data.allow_squash_merge,
-            MERGE: repo.data.allow_merge_commit,
-            REBASE: repo.data.allow_rebase_merge,
+            squash: repo.data.allow_squash_merge,
+            merge: repo.data.allow_merge_commit,
+            rebase: repo.data.allow_rebase_merge,
           };
 
           console.log(methods)
@@ -63,18 +68,11 @@ runs:
             throw new Error("No allowed merge method found");
           }
 
-          const pullRequestId = context.payload.pull_request.node_id;
-
-          console.log(`Enabling auto-merge for ${pullRequestId} with ${mergeMethod} method`)
-
-          await github.graphql(
-            "mutation EnableAutoMerge($input: EnablePullRequestAutoMergeInput!) { enablePullRequestAutoMerge(input: $input) { pullRequest { state } } }",
-            {
-              input: {
-                pullRequestId,
-                mergeMethod,
-              },
-            }
-          );
-
-        github-token: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
+          return mergeMethod;
+    - name: Enable auto merge
+      shell: bash
+      run: |
+        echo "Auto merging PR using method ${{steps.merge-type.outputs.result}}"
+        gh pr merge --delete-branch "--"${{ steps.merge-type.outputs.result }}" --auto ${{ github.event.pull_request.html_url }}
+      env:
+        GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
