@@ -18,7 +18,7 @@ version: 1
 services:
   github-action:
     policies:
-    - dependabot
+      - dependabot
 ```
 
 To reference the action, create a workflow in your project in `.github/workflows/` e.g.
