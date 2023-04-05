@@ -35,7 +35,7 @@ runs:
 
           const ourReview = reviews.find(
             (review) =>
-              review.state === "APPROVED" && review.user.login === "contentful-automation[bot]"
+              review.state === "APPROVED" && review.user && review.user.login === "contentful-automation[bot]"
           );
 
           if (ourReview) {
