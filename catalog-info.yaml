@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: github-auto-merge 
+  description: A github custom action to fetch a Github token from vault, approve the PR and enable auto merge for the PR so that once it passes all the PR checks it will be merged.
+  annotations:
+    github.com/project-slug: contentful/github-auto-merge 
+    contentful.com/service-tier: "4"
+
+  tags:
+    - tier-4
+spec:
+  type: component 
+  lifecycle: production  
+  owner: group:team-mechagodzilla 
