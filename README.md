@@ -46,3 +46,18 @@ jobs:
 You can see an example in this repo [example.yml](example.yml)
 
 If you already have an existing `dependabot-approve-and-request-merge.yml` workflow, you can simply replace the contents with the updated configuration.
+
+## Publishing a new version of the action
+
+Make your changes and commit to the main branch.
+
+Push new tags to Github as below
+
+```bash
+git tag v1 -f
+git tag v1.0 -f
+git tag v1.0.1 -f
+git push origin --tags -f
+```
+
+We need to force push the tags because we don't want to have to update every usage of the action with the new version.
