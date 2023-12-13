@@ -89,6 +89,4 @@ runs:
         echo "Auto merging PR using method $merge_method"
         gh pr merge --delete-branch "--$merge_method" --auto ${{ github.event.pull_request.html_url }}
       env:
-        # Note: The GH_TOKEN env var is required for now, even though it contradicts GH's documentation. If not present we
-        # were seeing an error message like this one: https://github.com/github/docs/issues/21930#issuecomment-1310122605
-        GH_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKEN }}
