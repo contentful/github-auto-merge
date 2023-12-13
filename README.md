@@ -35,10 +35,11 @@ jobs:
     permissions:
       contents: write
       id-token: write
+      pull-request: write
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     steps:
-      - uses: contentful/github-auto-merge@v1
+      - uses: contentful/github-auto-merge@v2
         with:
           VAULT_URL: ${{ secrets.VAULT_URL }} # this is an organisation level secret, you do not need to add it to your repo
 ```
