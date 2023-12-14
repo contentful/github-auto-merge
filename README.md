@@ -35,7 +35,7 @@ jobs:
     permissions:
       contents: write
       id-token: write
-      pull-request: write
+      pull-requests: write
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     steps:
