@@ -91,4 +91,4 @@ runs:
       env:
         # Note: The GH_TOKEN env var is required for now, even though it contradicts GH's documentation. If not present we
         # were seeing an error message like this one: https://github.com/github/docs/issues/21930#issuecomment-1310122605
-        GH_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ steps.vault.outputs.GITHUB_MERGE_TOKE }}
