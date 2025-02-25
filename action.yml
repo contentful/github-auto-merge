@@ -9,6 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Check if PR is from fork
+      shell: bash
+      run: |
+        if [ "${{ github.event.pull_request.head.repo.fork }}" == "true" ]; then
+          echo "Skipping action on fork PR"
+          exit 1
+        fi  
     - name: Retrieve Github Token
       id: vault
       uses: hashicorp/vault-action@v2.4.3
