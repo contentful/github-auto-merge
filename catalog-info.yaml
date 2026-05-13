@@ -10,6 +10,6 @@ metadata:
   tags:
     - tier-4
 spec:
-  type: component 
+  type: library 
   lifecycle: production  
   owner: group:team-mechagodzilla 
