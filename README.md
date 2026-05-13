@@ -1,4 +1,4 @@
-# github-auto-merge [2.0.0] <!-- x-release-please-version -->
+# github-auto-merge [2.1.0] <!-- x-release-please-version -->
 
 A github custom action to fetch a Github token from vault, approve the PR and enable auto merge for the PR so that once it passes all the PR checks it will be merged.
 
