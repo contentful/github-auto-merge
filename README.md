@@ -1,4 +1,4 @@
-# github-auto-merge
+# github-auto-merge [2.0.0] <!-- x-release-please-version -->
 
 A github custom action to fetch a Github token from vault, approve the PR and enable auto merge for the PR so that once it passes all the PR checks it will be merged.
 
@@ -50,15 +50,4 @@ If you already have an existing `dependabot-approve-and-request-merge.yml` workf
 
 ## Publishing a new version of the action
 
-Make your changes and commit to the main branch.
-
-Push new tags to Github as below
-
-```bash
-git tag v1 -f
-git tag v1.0 -f
-git tag v1.0.1 -f
-git push origin --tags -f
-```
-
-We need to force push the tags because we don't want to have to update every usage of the action with the new version.
+Releases are automated via [release-please](https://github.com/googleapis/release-please). Merge a commit following [Conventional Commits](https://www.conventionalcommits.org/) to `main` (e.g. `feat:`, `fix:`) and release-please will open a release PR. Merging that PR creates the GitHub release and tag automatically.
